@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useState } from "react";
 import { CalculatorWrapper, LogoContainer, Wrapper } from "./styled";
 import InputBlock from "Components/InputBlock";
 import ResultBlock from "Components/ResultBlock";
@@ -9,8 +9,8 @@ import LogoSvg from "assets/svgs/LogoSvg";
 import { checkForNumbers } from "utils/helpers";
 
 function App() {
-  const audio = new Audio(ringer);
-  const extremeAudio = new Audio(ringer2);
+  const audio = useMemo(() => new Audio(ringer), []);
+  const extremeAudio = useMemo(() => new Audio(ringer2), []);
 
   const initialState: IInitialState = {
     bill: { value: "", error: false },
@@ -127,7 +127,7 @@ function App() {
         audio.play();
       }
     }
-  }, [state.tip, state.bill.value, state.people.value]);
+  }, [state.tip, state.bill.value, state.people.value, audio, extremeAudio]);
 
   // ERASE RESULTS IF ANY OF THE INPUTS GET EMPTY
   useEffect(() => {
