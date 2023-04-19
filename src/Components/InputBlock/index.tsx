@@ -23,28 +23,38 @@ const InputBlock = ({
   tipSelect,
   onCustomInput,
 }: IInputBlock) => {
+  const [tempBill, setTempBill] = useState<string>("");
+  const [tempPeople, setTempPeople] = useState<string>("");
+
   const onBillChange = (value: string) => {
-    checkForNumbers(
-      value,
-      (value: string) => {
-        dispatch({ type: "bill", payload: value });
-      },
-      true
-    );
+    checkForNumbers(value, (value: string) => setTempBill(value), true);
   };
 
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      dispatch({ type: "bill", payload: tempBill });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [tempBill]);
+
   const onPeopleChange = (value: string) => {
-    checkForNumbers(value, (value: string) => {
-      dispatch({ type: "people", payload: value });
-    });
+    checkForNumbers(value, (value: string) => setTempPeople(value));
   };
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      dispatch({ type: "people", payload: tempPeople });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [tempPeople]);
 
   return (
     <Wrapper>
       {/* BILL  */}
       <LabelErrorWrapper label="Bill" error={state.bill.error}>
         <StyledInput
-          value={state.bill.value}
+          label="Bill"
+          value={tempBill}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onBillChange(e.target.value)
           }
@@ -65,7 +75,8 @@ const InputBlock = ({
       {/* NUMBER OF PEOPLE */}
       <LabelErrorWrapper label="Number of People" error={state.people.error}>
         <StyledInput
-          value={state.people.value}
+          label="Number of People"
+          value={tempPeople}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onPeopleChange(e.target.value)
           }
