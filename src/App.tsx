@@ -1,14 +1,17 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { CalculatorWrapper, Title, Wrapper } from "./styled";
+import { CalculatorWrapper, LogoContainer, Wrapper } from "./styled";
 import InputBlock from "Components/InputBlock";
 import ResultBlock from "Components/ResultBlock";
 import { IInitialState } from "Common/interfaces";
 import ringer from "assets/sounds/jingle.mp3";
 import ringer2 from "assets/sounds/holy-shit.mp3";
+import LogoSvg from "assets/svgs/LogoSvg";
+import { checkForNumbers } from "utils/helpers";
 
 function App() {
   const audio = new Audio(ringer);
   const extremeAudio = new Audio(ringer2);
+
   const initialState: IInitialState = {
     bill: { value: "", error: false },
     tip: undefined,
@@ -60,8 +63,15 @@ function App() {
     return { ...state, ...newState };
   };
 
+  // PERMANENT STATE
   const [state, dispatch] = useReducer(reducer, initialState);
+  //TEMPORARY STATE
+  const [tempBill, setTempBill] = useState<string>("");
   const [customTip, setCustomTip] = useState<string>("");
+  const [tempPeople, setTempPeople] = useState<string>("");
+  // MAX LENGTH FOR INPUTS
+  const [maxLengthBill, setMaxLengthBill] = useState<boolean>(false);
+  const [maxLengthPeople, setMaxLengthPeople] = useState<boolean>(false);
 
   const validateInputs = () => {
     if (!state.bill.value || !state.people.value) {
@@ -76,6 +86,7 @@ function App() {
     return true;
   };
 
+  //ON % BUTTON CLICK
   const tipSelect = (value: number) => {
     if (validateInputs()) {
       setCustomTip("");
@@ -124,26 +135,74 @@ function App() {
     }
   }, [state.bill.value, state.people.value]);
 
+  // RESET
   const onReset = () => {
     dispatch({ type: "reset" });
+    setTempBill("");
+    setTempPeople("");
   };
+
+  // ON BILL CHANGE FUNCTIONALITY
+  const onBillChange = (value: string) => {
+    if (value.length <= 7) {
+      checkForNumbers(value, (value: string) => setTempBill(value), true);
+    } else {
+      setMaxLengthBill(true);
+      setTimeout(() => {
+        setMaxLengthBill(false);
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      dispatch({ type: "bill", payload: tempBill });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [tempBill]);
+
+  // ON PEOPLE CHANGE FUNCTIONALITY
+  const onPeopleChange = (value: string) => {
+    if (value.length <= 3) {
+      checkForNumbers(value, (value: string) => setTempPeople(value));
+    } else {
+      setMaxLengthPeople(true);
+      setTimeout(() => {
+        setMaxLengthPeople(false);
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      dispatch({ type: "people", payload: tempPeople });
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [tempPeople]);
 
   return (
     <Wrapper>
-      <Title>Splitter</Title>
+      <LogoContainer>
+        <LogoSvg />
+      </LogoContainer>
       <CalculatorWrapper>
         <InputBlock
           state={state}
-          dispatch={dispatch}
           customTip={customTip}
           tipSelect={tipSelect}
           onCustomInput={onCustomInput}
+          maxLengthBill={maxLengthBill}
+          tempBill={tempBill}
+          tempPeople={tempPeople}
+          onBillChange={onBillChange}
+          maxLengthPeople={maxLengthPeople}
+          onPeopleChange={onPeopleChange}
         />
         <ResultBlock
           tipAmount={state.tip_amount}
           total={state.total}
           onReset={onReset}
-          resetDisabled={!state.tip_amount && !state.total}
+          disabled={!state.tip_amount && !state.total}
         />
       </CalculatorWrapper>
     </Wrapper>

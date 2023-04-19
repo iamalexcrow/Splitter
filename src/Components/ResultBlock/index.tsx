@@ -7,26 +7,17 @@ interface IResultBlock {
   tipAmount: number;
   total: number;
   onReset: () => void;
-  resetDisabled: boolean;
+  disabled: boolean;
 }
 
-const ResultBlock = ({
-  tipAmount,
-  total,
-  onReset,
-  resetDisabled,
-}: IResultBlock) => {
+const ResultBlock = ({ tipAmount, total, onReset, disabled }: IResultBlock) => {
   return (
     <Wrapper>
       <div>
         <OutputLine title="Tip Amount" value={tipAmount} />
         <OutputLine title="Total" value={total} />
       </div>
-      <Button
-        reset
-        onClick={resetDisabled ? () => {} : onReset}
-        disabled={resetDisabled}
-      >
+      <Button reset onClick={disabled ? () => {} : onReset} disabled={disabled}>
         RESET
       </Button>
     </Wrapper>

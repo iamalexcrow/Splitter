@@ -11,12 +11,6 @@ export const Wrapper = styled.div`
   background-color: ${css.colors.app_background};
 `;
 
-export const Title = styled.h1`
-  margin: 0px;
-  text-transform: uppercase;
-  font-family: "Chivo Mono", monospace;
-`;
-
 export const CalculatorWrapper = styled.div`
   max-width: 900px;
   width: 100%;
@@ -26,7 +20,9 @@ export const CalculatorWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 24px;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 `;
 
-//font-family: 'Chivo Mono', monospace;
-//font-family: 'Cousine', monospace;
+export const LogoContainer = styled.div`
+  margin-bottom: 32px;
+`;

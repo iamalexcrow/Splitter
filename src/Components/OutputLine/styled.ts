@@ -20,5 +20,5 @@ export const Subtitle = styled(Text)`
 
 export const Value = styled(Text)`
   color: ${css.colors.light_green};
-  font-size: 48px;
+  font-size: 40px;
 `;

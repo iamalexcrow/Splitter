@@ -6,15 +6,22 @@ interface ILabelErrorWrapper {
   label?: string;
   error?: boolean;
   children: JSX.Element;
+  maxLengthReached?: boolean;
 }
 
-const LabelErrorWrapper = ({ label, error, children }: ILabelErrorWrapper) => {
+const LabelErrorWrapper = ({
+  label,
+  error,
+  children,
+  maxLengthReached,
+}: ILabelErrorWrapper) => {
   return (
     <Wrapper>
       {label && (
         <Flex jc="space-between">
           <Label name={label}>{label}</Label>
           {error && <ErrorMessage>Can't be zero</ErrorMessage>}
+          {maxLengthReached && <ErrorMessage>Max length reached</ErrorMessage>}
         </Flex>
       )}
       {children}

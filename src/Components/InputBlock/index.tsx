@@ -10,48 +10,37 @@ import LabelErrorWrapper from "Components/LabelErrorWrapper";
 
 interface IInputBlock {
   state: IInitialState;
-  dispatch: React.Dispatch<any>;
   customTip: string;
   tipSelect: (v: number) => void;
   onCustomInput: (s: string) => void;
+  maxLengthBill: boolean;
+  tempBill: string;
+  onBillChange: (s: string) => void;
+  maxLengthPeople: boolean;
+  onPeopleChange: (s: string) => void;
+  tempPeople: string;
 }
 
 const InputBlock = ({
   state,
-  dispatch,
   customTip,
   tipSelect,
   onCustomInput,
+  maxLengthBill,
+  tempBill,
+  onBillChange,
+  maxLengthPeople,
+  onPeopleChange,
+  tempPeople,
 }: IInputBlock) => {
-  const [tempBill, setTempBill] = useState<string>("");
-  const [tempPeople, setTempPeople] = useState<string>("");
-
-  const onBillChange = (value: string) => {
-    checkForNumbers(value, (value: string) => setTempBill(value), true);
-  };
-
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      dispatch({ type: "bill", payload: tempBill });
-    }, 600);
-    return () => clearTimeout(timer);
-  }, [tempBill]);
-
-  const onPeopleChange = (value: string) => {
-    checkForNumbers(value, (value: string) => setTempPeople(value));
-  };
-
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      dispatch({ type: "people", payload: tempPeople });
-    }, 600);
-    return () => clearTimeout(timer);
-  }, [tempPeople]);
-
   return (
     <Wrapper>
       {/* BILL  */}
-      <LabelErrorWrapper label="Bill" error={state.bill.error}>
+      <LabelErrorWrapper
+        label="Bill"
+        error={state.bill.error}
+        maxLengthReached={maxLengthBill}
+      >
         <StyledInput
           label="Bill"
           value={tempBill}
@@ -60,7 +49,6 @@ const InputBlock = ({
           }
           error={state.bill.error}
           svg={<DollarSvg />}
-          maxLength={8}
         />
       </LabelErrorWrapper>
       {/* SELECT TIP BLOCK */}
@@ -73,7 +61,11 @@ const InputBlock = ({
         />
       </LabelErrorWrapper>
       {/* NUMBER OF PEOPLE */}
-      <LabelErrorWrapper label="Number of People" error={state.people.error}>
+      <LabelErrorWrapper
+        label="Number of People"
+        error={state.people.error}
+        maxLengthReached={maxLengthPeople}
+      >
         <StyledInput
           label="Number of People"
           value={tempPeople}
@@ -82,7 +74,6 @@ const InputBlock = ({
           }
           error={state.people.error}
           svg={<PeopleSvg />}
-          maxLength={3}
         />
       </LabelErrorWrapper>
     </Wrapper>
