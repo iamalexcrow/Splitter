@@ -122,8 +122,10 @@ function App() {
       dispatch({ type: "tip_amount", payload: tip.toFixed(2) });
       dispatch({ type: "total", payload: total.toFixed(2) });
       if (state.tip >= 50) {
+        extremeAudio.load();
         extremeAudio.play();
       } else {
+        audio.load();
         audio.play();
       }
     }
