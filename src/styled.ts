@@ -20,9 +20,9 @@ export const Title = styled.h1`
 export const CalculatorWrapper = styled.div`
   max-width: 900px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 24px;
   background-color: ${css.colors.white};
-  padding: 50px;
+  padding: 32px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 24px;

@@ -46,6 +46,8 @@ export const ErrorMessage = styled(Text)`
 
 interface IButton {
   selected?: boolean;
+  reset?: boolean;
+  disabled?: boolean;
 }
 
 export const Button = styled.button<IButton>`
@@ -71,5 +73,27 @@ export const Button = styled.button<IButton>`
     `
     background-color: ${css.colors.light_green};
     color: ${css.colors.dark_green}
+  `}
+  ${(p: IButton) =>
+    p.reset &&
+    `
+    width: 100%;
+    background-color: ${css.colors.light_green};
+    color: ${css.colors.dark_green}
+  `}
+   ${(p: IButton) =>
+    p.disabled &&
+    `
+    width: 100%;
+    background-color: ${css.colors.darker_green};
+    color: ${css.colors.dark_green};
+    cursor:auto;
+
+    &:hover {
+    background-color: ${css.colors.darker_green};
+    color: ${css.colors.dark_green};
+    cursor:auto;
+      transition: 0.3s;
+    }
   `}
 `;

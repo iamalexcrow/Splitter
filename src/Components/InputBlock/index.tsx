@@ -50,6 +50,7 @@ const InputBlock = ({
           }
           error={state.bill.error}
           svg={<DollarSvg />}
+          maxLength={8}
         />
       </LabelErrorWrapper>
       {/* SELECT TIP BLOCK */}
