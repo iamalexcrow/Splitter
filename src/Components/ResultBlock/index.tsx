@@ -17,7 +17,7 @@ const ResultBlock = ({ tipAmount, total, onReset, disabled }: IResultBlock) => {
         <OutputLine title="Tip Amount" value={tipAmount} />
         <OutputLine title="Total" value={total} />
       </div>
-      <Button reset onClick={disabled ? () => {} : onReset} disabled={disabled}>
+      <Button onClick={disabled ? () => {} : onReset} reset disabled={disabled}>
         RESET
       </Button>
     </Wrapper>

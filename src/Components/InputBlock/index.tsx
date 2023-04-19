@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Wrapper } from "./styled";
 import StyledInput from "Atoms/Input";
 import { IInitialState } from "Common/interfaces";
-import { checkForNumbers } from "utils/helpers";
+
 import DollarSvg from "assets/svgs/DollarSvg";
 import PeopleSvg from "assets/svgs/PeopleSvg";
 import ButtonsBlock from "Components/ButtonsBlock";
