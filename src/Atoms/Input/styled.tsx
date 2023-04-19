@@ -1,4 +1,3 @@
-import { Text } from "Common/regularComponents";
 import css from "Constants/css";
 import styled from "styled-components";
 
