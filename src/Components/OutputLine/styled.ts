@@ -12,6 +12,9 @@ export const Title = styled(Text)`
   font-size: 14px;
   color: ${css.colors.white};
   font-weight: 700;
+  @media (max-width: 600px) {
+    font-size: 12px;
+  }
 `;
 
 export const Subtitle = styled(Text)`
@@ -21,4 +24,7 @@ export const Subtitle = styled(Text)`
 export const Value = styled(Text)`
   color: ${css.colors.light_green};
   font-size: 40px;
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
 `;

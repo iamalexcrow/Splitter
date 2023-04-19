@@ -42,6 +42,9 @@ export const Input = styled.input.attrs({
     `
     border-color: ${css.colors.error};
   `}
+  @media(max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 
 export const IconContainer = styled.div`

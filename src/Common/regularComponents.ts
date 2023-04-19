@@ -96,4 +96,7 @@ export const Button = styled.button<IButton>`
       transition: 0.3s;
     }
   `}
+@media(max-width: 600px) {
+    font-size: 16px;
+  }
 `;
