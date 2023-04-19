@@ -105,8 +105,6 @@ function App() {
     let timer = setTimeout(() => {
       if (customTip) {
         dispatch({ type: "tip", payload: Number(customTip) });
-      } else {
-        dispatch({ type: "remove_results" });
       }
     }, 1000);
     return () => clearTimeout(timer);
